@@ -4,11 +4,11 @@ import copy
 from collections import namedtuple, deque
 
 from model import Actor, Critic
-#from ddpg_model_mine import Actor, Critic # this is mine
 
 import torch
 import torch.nn.functional as F
 import torch.optim as optim
+
 
 BUFFER_SIZE = int(1e6)  # replay buffer size
 BATCH_SIZE = 128        # minibatch size
@@ -24,6 +24,7 @@ LEARN_TIMES = 10
 
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
 
 class Agent():
     """Interacts with and learns from the environment."""
@@ -104,9 +105,8 @@ class Agent():
         critic_loss = F.mse_loss(Q_expected, Q_targets)
         # Minimize the loss
         self.critic_optimizer.zero_grad()
-        critic_loss.backward()
-        
-#         torch.nn.utils.clip_grad_norm_(self.critic_local.parameters(), 1)
+        critic_loss.backward()        
+        torch.nn.utils.clip_grad_norm_(self.critic_local.parameters(), 1)
         self.critic_optimizer.step()
 
         # ---------------------------- update actor ---------------------------- #
@@ -138,6 +138,7 @@ class Agent():
         for target_param, local_param in zip(target_model.parameters(), local_model.parameters()):
             target_param.data.copy_(tau*local_param.data + (1.0-tau)*target_param.data)
 
+
 class OUNoise:
     """Ornstein-Uhlenbeck process."""
 
@@ -165,6 +166,7 @@ class OUNoise:
         dx = self.theta * (self.mu - x) + self.sigma * np.array([random.random() for i in range(len(x))])
         self.state = x + dx
         return self.state
+
 
 class ReplayBuffer:
     """Fixed-size buffer to store experience tuples."""
