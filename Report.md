@@ -35,9 +35,9 @@ Unlike the navigation project where four **discrete actions** are available, her
 
 This project implements Deep Deterministic Polich Gradient (DDPG) Actor-Critic method. DDPG is a model-free, off-policy reinforcement learning that combines [Deterministic Policy Gradient (DPG)](https://hal.inria.fr/file/index/docid/938992/filename/dpg-icml2014.pdf) with [Deep Q-Network (DQN)](https://storage.googleapis.com/deepmind-media/dqn/DQNNaturePaper.pdf). As mentioned in [my previous project](https://github.com/DoosanJung/Udacity-deep-reinforcement-learning-nanodegree-navigation/blob/main/Report.md#deep-q-networks), DQN stabilizes the learning of Q-function by experience replay and the fixed target network. The original DQN works in discrete space, and DDPG extends it to continuous space with the actor-critic framework while learning a deterministic policy.
 
-For more information, please refer to the paper, [Lillicrap, Timothy P., et al. "Continuous control with deep reinforcement learning." arXiv preprint arXiv:1509.02971 (2015).,](https://arxiv.org/pdf/1509.02971.pdf).
-
 > Deep Deterministic Policy Gradient (DDPG) is a model-free off-policy algorithm for learning continous actions. It combines ideas from DPG (Deterministic Policy Gradient) and DQN (Deep Q-Network). It uses Experience Replay and slow-learning target networks from DQN, and it is based on DPG, which can operate over continuous action spaces. [source](https://keras.io/examples/rl/ddpg_pendulum/)
+
+For more information, please refer to the paper, [Lillicrap, Timothy P., et al. "Continuous control with deep reinforcement learning." arXiv preprint arXiv:1509.02971 (2015)](https://arxiv.org/pdf/1509.02971.pdf).
 
 > Our contribution here is to provide modifications to DPG, inspired by the success of DQN, which allow it to use neural network function approximators to learn in large state and action spaces online. We refer to our algorithm as Deep DPG (DDPG, Algorithm 1).[source](https://arxiv.org/pdf/1509.02971.pdf)
 
@@ -59,15 +59,15 @@ This screenshot is taken from the [Deep Reinforcement Learning Nanodegree course
 
 The implementation is borrowed from the 'DDPG' coding exercise from the 'Actor-Critic Methods' lesson in the Udacitiy [Deep Reinforcement Learning Nanodegree](https://www.udacity.com/course/deep-reinforcement-learning-nanodegree--nd893) program.
 
-1. `model.py` implements the Deep Deterministic Polich Gradient (DDPG) Actor and Critic networks. This currently contains fully-connected neural network with ReLU activation. You can change the structure of the neural network and play with it.
+1. `model.py` implements the Deep Deterministic Polich Gradient (DDPG) `Actor` and `Critic` networks. This currently contains fully-connected neural network with ReLU activation, along with the Batch Normalization. You can change the structure of the neural network and play with it.
    > Deep Deterministic Policy Gradient (DDPG) is a model-free off-policy algorithm for learning continous actions. It combines ideas from DPG (Deterministic Policy Gradient) and DQN (Deep Q-Network). It uses Experience Replay and slow-learning target networks from DQN, and it is based on DPG, which can operate over continuous action spaces. [source](https://keras.io/examples/rl/ddpg_pendulum/)
    
-   The Actor and Critic Local and Target networks are defined as below:
+   The `Actor` and `Critic` Local and Target networks are defined as below:
    ![Actor_Critic_networks](images/Actor_Critic_networks.png)
 
-   Similarly to [the paper](https://arxiv.org/pdf/1509.02971.pdf), I also included [Batch normalization](http://proceedings.mlr.press/v37/ioffe15.pdf)
+   Similarly to [the paper](https://arxiv.org/pdf/1509.02971.pdf), I also used [Batch normalization](http://proceedings.mlr.press/v37/ioffe15.pdf)
 
-2. `ddpg_agent.py` implementss the Agent, OUNoise, and ReplayBuffer. The Agent has Actor network and Critic network. Actor network proposes an action given an state and Critic network predicts if the action is good or bad given a state and an action.Each Actor and Critic network has local and target network. For continuous action spaces, exploration is done via adding noise to the action and the authors of the paper, [Lillicrap, Timothy P., et al. "Continuous control with deep reinforcement learning." arXiv preprint arXiv:1509.02971 (2015).,](https://arxiv.org/pdf/1509.02971.pdf), used Ornstein-Uhlenbeck process.
+2. `ddpg_agent.py` implementss the `Agent`, `OUNoise`, and `ReplayBuffer`. The Agent has Actor networks and Critic networks. Actor network proposes an action given an state and Critic network predicts if the action is good or bad given a state and an action. Each Actor and Critic network has local and target network. For continuous action spaces, exploration is done via adding noise to the action and the authors of the paper, [Lillicrap, Timothy P., et al. "Continuous control with deep reinforcement learning." arXiv preprint arXiv:1509.02971 (2015).,](https://arxiv.org/pdf/1509.02971.pdf), used Ornstein-Uhlenbeck process.
    > An advantage of off- policies algorithms such as DDPG is that we can treat the problem of exploration independently from the learning algorithm. We constructed an exploration policy μ′ by adding noise sampled from a noise process N to our actor policy. As detailed in the supplementary materials we used an Ornstein-Uhlenbeck process (Uhlenbeck & Ornstein, 1930) to generate temporally correlated exploration for exploration efficiency in physical control problems with inertia. [Source](https://arxiv.org/pdf/1509.02971.pdf)
 
     The Agent also uses Experience Replay.  
