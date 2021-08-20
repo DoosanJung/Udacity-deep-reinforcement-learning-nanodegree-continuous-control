@@ -18,7 +18,7 @@ LR_ACTOR = 5e-4         # learning rate of the actor
 LR_CRITIC = 5e-4        # learning rate of the critic
 WEIGHT_DECAY = 0        # L2 weight decay
 EPSILON_DECAY = 1e-6    # epsilon decay
-EPSILON = 1.0           # exploration actions space
+EPSILON = 1.0           # starting epsilon value
 LEARN_INTERVAL = 20     # learning 10 times per 20 timesteps   
 LEARN_TIMES = 10    
 
